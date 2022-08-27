@@ -1165,7 +1165,8 @@ class Note extends AbstractEntity {
                 this.flatTextCache = null;
 
                 this.isDecrypted = true;
-            } catch (e) {
+            }
+            catch (e) {
                 log.error(`Could not decrypt note ${this.noteId}: ${e.message} ${e.stack}`);
             }
         }
