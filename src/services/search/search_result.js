@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 const beccaService = require('../../becca/becca_service');
 

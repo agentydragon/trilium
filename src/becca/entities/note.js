@@ -609,7 +609,7 @@ class Note extends AbstractEntity {
      */
     getOwnedAttributes(type, name) {
         // it's a common mistake to include # or ~ into attribute name
-        if (name && ['#', '~'].includes(name[0])) {
+        if (name && ["#", "~"].includes(name[0])) {
             name = name.substr(1);
         }
 
@@ -747,9 +747,9 @@ class Note extends AbstractEntity {
         }
     }
 
-    getRelationDefinitions() { return this.getLabels().filter(l => l.name.startsWith('relation:')); }
+    getRelationDefinitions() { return this.getLabels().filter(l => l.name.startsWith("relation:")); }
 
-    getLabelDefinitions() { return this.getLabels().filter(l => l.name.startsWith('relation:')); }
+    getLabelDefinitions() { return this.getLabels().filter(l => l.name.startsWith("relation:")); }
 
     isTemplate() { return !!this.targetRelations.find(rel => rel.name === 'template'); }
 
@@ -926,7 +926,7 @@ class Note extends AbstractEntity {
     }
 
     getNoteRevisions() {
-        return sql.getRows('SELECT * FROM note_revisions WHERE noteId = ?', [this.noteId])
+        return sql.getRows("SELECT * FROM note_revisions WHERE noteId = ?", [this.noteId])
             .map(row => new NoteRevision(row));
     }
 
@@ -973,7 +973,7 @@ class Note extends AbstractEntity {
         const attributes = this.getOwnedAttributes();
         const attr = attributes.find(attr => attr.type === type && attr.name === name);
 
-        value = value !== null && value !== undefined ? value.toString() : '';
+        value = value !== null && value !== undefined ? value.toString() : "";
 
         if (attr) {
             if (attr.value !== value) {
@@ -1011,14 +1011,12 @@ class Note extends AbstractEntity {
      * See addLabel, addRelation for more specific methods.
      *
      * @param {string} type - attribute type (label / relation)
-     * @param {string} name - name of the attribute, not including the leading
-     *     ~/#
-     * @param {string} [value] - value of the attribute - text for labels, target
-     * note ID for relations; optional.
+     * @param {string} name - name of the attribute, not including the leading ~/#
+     * @param {string} [value] - value of the attribute - text for labels, target note ID for relations; optional.
      *
      * @return {Attribute}
      */
-    addAttribute(type, name, value = '', isInheritable = false, position = 1000) {
+    addAttribute(type, name, value = "", isInheritable = false, position = 1000) {
         const Attribute = require('./attribute');
 
         return new Attribute({
@@ -1123,7 +1121,7 @@ class Note extends AbstractEntity {
     removeRelation(name, value) { return this.removeAttribute(RELATION, name, value); }
 
     searchNotesInSubtree(searchString) {
-        const searchService = require('../../services/search/services/search');
+        const searchService = require("../../services/search/services/search");
 
         return searchService.searchNotes(searchString);
     }
@@ -1207,8 +1205,7 @@ class Note extends AbstractEntity {
                 pojo.title = protectedSessionService.encrypt(pojo.title);
             }
             else {
-                // updating protected note outside of protected session means we
-                // will keep original ciphertexts
+                // updating protected note outside of protected session means we will keep original ciphertexts
                 delete pojo.title;
             }
         }
