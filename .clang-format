@@ -5,3 +5,7 @@ IndentWidth: 4
 Language: JavaScript
 ColumnLimit: 100
 UseTab: Never
+BreakBeforeBraces: Custom
+BraceWrapping:
+  BeforeElse: true
+

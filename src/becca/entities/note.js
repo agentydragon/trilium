@@ -46,14 +46,28 @@ class Note extends AbstractEntity {
 
     updateFromRow(row) {
         this.update([
-            row.noteId, row.title, row.type, row.mime, row.isProtected, row.dateCreated,
-            row.dateModified, row.utcDateCreated, row.utcDateModified
+            row.noteId,
+            row.title,
+            row.type,
+            row.mime,
+            row.isProtected,
+            row.dateCreated,
+            row.dateModified,
+            row.utcDateCreated,
+            row.utcDateModified,
         ]);
     }
 
     update([
-        noteId, title, type, mime, isProtected, dateCreated, dateModified, utcDateCreated,
-        utcDateModified
+        noteId,
+        title,
+        type,
+        mime,
+        isProtected,
+        dateCreated,
+        dateModified,
+        utcDateCreated,
+        utcDateModified,
     ]) {
         // ------ Database persisted attributes ------
 
@@ -205,7 +219,8 @@ class Note extends AbstractEntity {
         if (!row) {
             if (silentNotFoundError) {
                 return undefined;
-            } else {
+            }
+            else {
                 throw new Error('Cannot find note content for noteId=' + this.noteId);
             }
         }
@@ -215,14 +230,16 @@ class Note extends AbstractEntity {
         if (this.isProtected) {
             if (protectedSessionService.isProtectedSessionAvailable()) {
                 content = content === null ? null : protectedSessionService.decrypt(content);
-            } else {
+            }
+            else {
                 content = '';
             }
         }
 
         if (this.isStringNote()) {
             return content === null ? '' : content.toString('UTF-8');
-        } else {
+        }
+        else {
             return content;
         }
     }
@@ -258,7 +275,8 @@ class Note extends AbstractEntity {
 
         if (this.isStringNote()) {
             content = content.toString();
-        } else {
+        }
+        else {
             content = Buffer.isBuffer(content) ? content : Buffer.from(content);
         }
 
@@ -272,7 +290,8 @@ class Note extends AbstractEntity {
         if (this.isProtected) {
             if (protectedSessionService.isProtectedSessionAvailable()) {
                 pojo.content = protectedSessionService.encrypt(pojo.content);
-            } else if (!ignoreMissingProtectedSession) {
+            }
+            else if (!ignoreMissingProtectedSession) {
                 throw new Error(`Cannot update content of noteId '${
                     this.noteId}' since we're out of protected session.`);
             }
@@ -360,11 +379,14 @@ class Note extends AbstractEntity {
 
         if (type && name) {
             return this.__attributeCache.filter(attr => attr.type === type && attr.name === name);
-        } else if (type) {
+        }
+        else if (type) {
             return this.__attributeCache.filter(attr => attr.type === type);
-        } else if (name) {
+        }
+        else if (name) {
             return this.__attributeCache.filter(attr => attr.name === name);
-        } else {
+        }
+        else {
             return this.__attributeCache.slice();
         }
     }
@@ -663,11 +685,14 @@ class Note extends AbstractEntity {
 
         if (type && name) {
             return this.ownedAttributes.filter(attr => attr.type === type && attr.name === name);
-        } else if (type) {
+        }
+        else if (type) {
             return this.ownedAttributes.filter(attr => attr.type === type);
-        } else if (name) {
+        }
+        else if (name) {
             return this.ownedAttributes.filter(attr => attr.name === name);
-        } else {
+        }
+        else {
             return this.ownedAttributes.slice();
         }
     }
@@ -1065,7 +1090,8 @@ class Note extends AbstractEntity {
                 attr.value = value;
                 attr.save();
             }
-        } else {
+        }
+        else {
             const Attribute = require('./attribute');
 
             new Attribute({noteId: this.noteId, type: type, name: name, value: value}).save();
@@ -1152,7 +1178,8 @@ class Note extends AbstractEntity {
     toggleAttribute(type, enabled, name, value) {
         if (enabled) {
             this.setAttribute(type, name, value);
-        } else {
+        }
+        else {
             this.removeAttribute(type, name, value);
         }
     }
@@ -1306,7 +1333,8 @@ class Note extends AbstractEntity {
         if (pojo.isProtected) {
             if (this.isDecrypted) {
                 pojo.title = protectedSessionService.encrypt(pojo.title);
-            } else {
+            }
+            else {
                 // updating protected note outside of protected session means we
                 // will keep original ciphertexts
                 delete pojo.title;
