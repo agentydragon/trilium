@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 const protectedSessionService = require('../../services/protected_session');
 const log = require('../../services/log');
@@ -6,9 +6,9 @@ const sql = require('../../services/sql');
 const utils = require('../../services/utils');
 const dateUtils = require('../../services/date_utils');
 const entityChangesService = require('../../services/entity_changes');
-const AbstractEntity = require('./abstract_entity');
-const NoteRevision = require('./note_revision');
-const TaskContext = require('../../services/task_context.js');
+const AbstractEntity = require("./abstract_entity");
+const NoteRevision = require("./note_revision");
+const TaskContext = require("../../services/task_context.js");
 
 const LABEL = 'label';
 const RELATION = 'relation';
@@ -203,7 +203,7 @@ class Note extends AbstractEntity {
                 return undefined;
             }
             else {
-                throw new Error('Cannot find note content for noteId=' + this.noteId);
+                throw new Error("Cannot find note content for noteId=" + this.noteId);
             }
         }
 
@@ -214,12 +214,12 @@ class Note extends AbstractEntity {
                 content = content === null ? null : protectedSessionService.decrypt(content);
             }
             else {
-                content = '';
+                content = "";
             }
         }
 
         if (this.isStringNote()) {
-            return content === null ? '' : content.toString('UTF-8');
+            return content === null ? "" : content.toString('UTF-8');
         }
         else {
             return content;
@@ -279,9 +279,9 @@ class Note extends AbstractEntity {
             }
         }
 
-        sql.upsert('note_contents', 'noteId', pojo);
+        sql.upsert("note_contents", "noteId", pojo);
 
-        const hash = utils.hash(this.noteId + '|' + pojo.content.toString());
+        const hash = utils.hash(this.noteId + "|" + pojo.content.toString());
 
         entityChangesService.addEntityChange({
             entityName: 'note_contents',
