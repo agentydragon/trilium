@@ -175,8 +175,7 @@ class Note extends AbstractEntity {
 
     /** @returns {Branch[]} */
     getChildBranches() {
-        return this.children.map(
-            childNote => this.becca.getBranchFromChildAndParent(childNote.noteId, this.noteId));
+        return this.children.map(childNote => this.becca.getBranchFromChildAndParent(childNote.noteId, this.noteId));
     }
 
     /*
@@ -274,8 +273,8 @@ class Note extends AbstractEntity {
                 pojo.content = protectedSessionService.encrypt(pojo.content);
             }
             else if (!ignoreMissingProtectedSession) {
-                throw new Error(`Cannot update content of noteId '${
-                    this.noteId}' since we're out of protected session.`);
+                throw new Error(
+                    `Cannot update content of noteId '${this.noteId}' since we're out of protected session.`);
             }
         }
 
@@ -311,8 +310,8 @@ class Note extends AbstractEntity {
      */
     isJavaScript() {
         return (this.type === 'code' || this.type === 'file') &&
-            (this.mime.startsWith('application/javascript') ||
-             this.mime === 'application/x-javascript' || this.mime === 'text/javascript');
+            (this.mime.startsWith('application/javascript') || this.mime === 'application/x-javascript' ||
+             this.mime === 'text/javascript');
     }
 
     /** @returns {boolean} true if this note is HTML */
@@ -428,9 +427,7 @@ class Note extends AbstractEntity {
         return this.inheritableAttributeCache;
     }
 
-    hasAttribute(type, name) {
-        return !!this.getAttributes().find(attr => attr.type === type && attr.name === name);
-    }
+    hasAttribute(type, name) { return !!this.getAttributes().find(attr => attr.type === type && attr.name === name); }
 
     getAttributeCaseInsensitive(type, name, value) {
         name = name.toLowerCase();
@@ -442,8 +439,7 @@ class Note extends AbstractEntity {
     }
 
     getRelationTarget(name) {
-        const relation =
-            this.getAttributes().find(attr => attr.type === 'relation' && attr.name === name);
+        const relation = this.getAttributes().find(attr => attr.type === 'relation' && attr.name === name);
 
         return relation ? relation.targetNote : null;
     }
@@ -656,10 +652,7 @@ class Note extends AbstractEntity {
     // are always explored as first when looking for note path
     sortParents() {
         this.parentBranches.sort(
-            (a, b) =>
-                a.branchId.startsWith('virt-') || a.parentNote.hasInheritableOwnedArchivedLabel() ?
-                1 :
-                -1);
+            (a, b) => a.branchId.startsWith('virt-') || a.parentNote.hasInheritableOwnedArchivedLabel() ? 1 : -1);
 
         this.parents = this.parentBranches.map(branch => branch.parentNote);
     }
@@ -754,9 +747,7 @@ class Note extends AbstractEntity {
         }
     }
 
-    getRelationDefinitions() {
-        return this.getLabels().filter(l => l.name.startsWith('relation:'));
-    }
+    getRelationDefinitions() { return this.getLabels().filter(l => l.name.startsWith('relation:')); }
 
     getLabelDefinitions() { return this.getLabels().filter(l => l.name.startsWith('relation:')); }
 
@@ -815,9 +806,7 @@ class Note extends AbstractEntity {
     }
 
     /** @returns {String[]} */
-    getSubtreeNoteIds(includeArchived = true) {
-        return this.getSubtreeNotes(includeArchived).map(note => note.noteId);
-    }
+    getSubtreeNoteIds(includeArchived = true) { return this.getSubtreeNotes(includeArchived).map(note => note.noteId); }
 
     getDescendantNoteIds() { return this.getSubtreeNoteIds(); }
 
@@ -835,26 +824,19 @@ class Note extends AbstractEntity {
 
     get
     relationCount() {
-        return this.getAttributes()
-            .filter(attr => attr.type === 'relation' && !attr.isAutoLink())
-            .length;
+        return this.getAttributes().filter(attr => attr.type === 'relation' && !attr.isAutoLink()).length;
     }
 
     get
-    relationCountIncludingLinks() {
-        return this.getAttributes().filter(attr => attr.type === 'relation').length;
-    }
+    relationCountIncludingLinks() { return this.getAttributes().filter(attr => attr.type === 'relation').length; }
 
     get
     ownedRelationCount() {
-        return this.ownedAttributes.filter(attr => attr.type === 'relation' && !attr.isAutoLink())
-            .length;
+        return this.ownedAttributes.filter(attr => attr.type === 'relation' && !attr.isAutoLink()).length;
     }
 
     get
-    ownedRelationCountIncludingLinks() {
-        return this.ownedAttributes.filter(attr => attr.type === 'relation').length;
-    }
+    ownedRelationCountIncludingLinks() { return this.ownedAttributes.filter(attr => attr.type === 'relation').length; }
 
     get
     targetRelationCount() { return this.targetRelations.filter(attr => !attr.isAutoLink()).length; }
@@ -1058,9 +1040,7 @@ class Note extends AbstractEntity {
      *
      * @return {Attribute}
      */
-    addLabel(name, value = '', isInheritable = false) {
-        return this.addAttribute(LABEL, name, value, isInheritable);
-    }
+    addLabel(name, value = '', isInheritable = false) { return this.addAttribute(LABEL, name, value, isInheritable); }
 
     /**
      * Adds a new relation to this note. The relation attribute is saved and
@@ -1108,9 +1088,7 @@ class Note extends AbstractEntity {
      * @param {string} name - relation name
      * @param {string} [value] - relation value (noteId)
      */
-    toggleRelation(enabled, name, value) {
-        return this.toggleAttribute(RELATION, enabled, name, value);
-    }
+    toggleRelation(enabled, name, value) { return this.toggleAttribute(RELATION, enabled, name, value); }
 
     /**
      * Update's given label's value or creates it if it doesn't exist
@@ -1181,8 +1159,7 @@ class Note extends AbstractEntity {
     }
 
     decrypt() {
-        if (this.isProtected && !this.isDecrypted &&
-            protectedSessionService.isProtectedSessionAvailable()) {
+        if (this.isProtected && !this.isDecrypted && protectedSessionService.isProtectedSessionAvailable()) {
             try {
                 this.title = protectedSessionService.decryptString(this.title);
                 this.flatTextCache = null;
