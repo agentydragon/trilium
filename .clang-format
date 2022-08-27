@@ -8,4 +8,4 @@ UseTab: Never
 BreakBeforeBraces: Custom
 BraceWrapping:
   BeforeElse: true
-
+JavaScriptQuotes: Leave
