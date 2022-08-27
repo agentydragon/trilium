@@ -21,17 +21,11 @@ const RELATION = 'relation';
  */
 class Note extends AbstractEntity {
     static get
-    entityName() {
-        return 'notes';
-    }
+    entityName() { return 'notes'; }
     static get
-    primaryKeyName() {
-        return 'noteId';
-    }
+    primaryKeyName() { return 'noteId'; }
     static get
-    hashedProperties() {
-        return ['noteId', 'title', 'isProtected', 'type', 'mime'];
-    }
+    hashedProperties() { return ['noteId', 'title', 'isProtected', 'type', 'mime']; }
 
     constructor(row) {
         super();
@@ -159,37 +153,25 @@ class Note extends AbstractEntity {
             || !this.isProtected || protectedSessionService.isProtectedSessionAvailable()
     }
 
-    getTitleOrProtected() {
-        return this.isContentAvailable() ? this.title : '[protected]';
-    }
+    getTitleOrProtected() { return this.isContentAvailable() ? this.title : '[protected]'; }
 
     /** @returns {Branch[]} */
-    getParentBranches() {
-        return this.parentBranches;
-    }
+    getParentBranches() { return this.parentBranches; }
 
     /**
      * @returns {Branch[]}
      * @deprecated use getParentBranches() instead
      */
-    getBranches() {
-        return this.parentBranches;
-    }
+    getBranches() { return this.parentBranches; }
 
     /** @returns {Note[]} */
-    getParentNotes() {
-        return this.parents;
-    }
+    getParentNotes() { return this.parents; }
 
     /** @returns {Note[]} */
-    getChildNotes() {
-        return this.children;
-    }
+    getChildNotes() { return this.children; }
 
     /** @returns {boolean} */
-    hasChildren() {
-        return this.children && this.children.length > 0;
-    }
+    hasChildren() { return this.children && this.children.length > 0; }
 
     /** @returns {Branch[]} */
     getChildBranches() {
@@ -311,24 +293,18 @@ class Note extends AbstractEntity {
         });
     }
 
-    setJsonContent(content) {
-        this.setContent(JSON.stringify(content, null, '\t'));
-    }
+    setJsonContent(content) { this.setContent(JSON.stringify(content, null, '\t')); }
 
     /**
      * @returns {boolean} true if this note is the root of the note tree. Root
      *     note has "root" noteId
      */
-    isRoot() {
-        return this.noteId === 'root';
-    }
+    isRoot() { return this.noteId === 'root'; }
 
     /**
      * @returns {boolean} true if this note is of application/json content type
      */
-    isJson() {
-        return this.mime === 'application/json';
-    }
+    isJson() { return this.mime === 'application/json'; }
 
     /**
      * @returns {boolean} true if this note is JavaScript (code or attachment)
@@ -340,14 +316,10 @@ class Note extends AbstractEntity {
     }
 
     /** @returns {boolean} true if this note is HTML */
-    isHtml() {
-        return ['code', 'file', 'render'].includes(this.type) && this.mime === 'text/html';
-    }
+    isHtml() { return ['code', 'file', 'render'].includes(this.type) && this.mime === 'text/html'; }
 
     /** @returns {boolean} true if the note has string content (not binary) */
-    isStringNote() {
-        return utils.isStringNote(this.type, this.mime);
-    }
+    isStringNote() { return utils.isStringNote(this.type, this.mime); }
 
     /**
      * @returns {string|null} JS script environment - either "frontend" or
@@ -480,97 +452,73 @@ class Note extends AbstractEntity {
      * @param {string} name - label name
      * @returns {boolean} true if label exists (including inherited)
      */
-    hasLabel(name) {
-        return this.hasAttribute(LABEL, name);
-    }
+    hasLabel(name) { return this.hasAttribute(LABEL, name); }
 
     /**
      * @param {string} name - label name
      * @returns {boolean} true if label exists (excluding inherited)
      */
-    hasOwnedLabel(name) {
-        return this.hasOwnedAttribute(LABEL, name);
-    }
+    hasOwnedLabel(name) { return this.hasOwnedAttribute(LABEL, name); }
 
     /**
      * @param {string} name - relation name
      * @returns {boolean} true if relation exists (including inherited)
      */
-    hasRelation(name) {
-        return this.hasAttribute(RELATION, name);
-    }
+    hasRelation(name) { return this.hasAttribute(RELATION, name); }
 
     /**
      * @param {string} name - relation name
      * @returns {boolean} true if relation exists (excluding inherited)
      */
-    hasOwnedRelation(name) {
-        return this.hasOwnedAttribute(RELATION, name);
-    }
+    hasOwnedRelation(name) { return this.hasOwnedAttribute(RELATION, name); }
 
     /**
      * @param {string} name - label name
      * @returns {Attribute|null} label if it exists, null otherwise
      */
-    getLabel(name) {
-        return this.getAttribute(LABEL, name);
-    }
+    getLabel(name) { return this.getAttribute(LABEL, name); }
 
     /**
      * @param {string} name - label name
      * @returns {Attribute|null} label if it exists, null otherwise
      */
-    getOwnedLabel(name) {
-        return this.getOwnedAttribute(LABEL, name);
-    }
+    getOwnedLabel(name) { return this.getOwnedAttribute(LABEL, name); }
 
     /**
      * @param {string} name - relation name
      * @returns {Attribute|null} relation if it exists, null otherwise
      */
-    getRelation(name) {
-        return this.getAttribute(RELATION, name);
-    }
+    getRelation(name) { return this.getAttribute(RELATION, name); }
 
     /**
      * @param {string} name - relation name
      * @returns {Attribute|null} relation if it exists, null otherwise
      */
-    getOwnedRelation(name) {
-        return this.getOwnedAttribute(RELATION, name);
-    }
+    getOwnedRelation(name) { return this.getOwnedAttribute(RELATION, name); }
 
     /**
      * @param {string} name - label name
      * @returns {string|null} label value if label exists, null otherwise
      */
-    getLabelValue(name) {
-        return this.getAttributeValue(LABEL, name);
-    }
+    getLabelValue(name) { return this.getAttributeValue(LABEL, name); }
 
     /**
      * @param {string} name - label name
      * @returns {string|null} label value if label exists, null otherwise
      */
-    getOwnedLabelValue(name) {
-        return this.getOwnedAttributeValue(LABEL, name);
-    }
+    getOwnedLabelValue(name) { return this.getOwnedAttributeValue(LABEL, name); }
 
     /**
      * @param {string} name - relation name
      * @returns {string|null} relation value if relation exists, null otherwise
      */
-    getRelationValue(name) {
-        return this.getAttributeValue(RELATION, name);
-    }
+    getRelationValue(name) { return this.getAttributeValue(RELATION, name); }
 
     /**
      * @param {string} name - relation name
      * @returns {string|null} relation value if relation exists, null otherwise
      */
-    getOwnedRelationValue(name) {
-        return this.getOwnedAttributeValue(RELATION, name);
-    }
+    getOwnedRelationValue(name) { return this.getOwnedAttributeValue(RELATION, name); }
 
     /**
      * @param {string} type - attribute type (label, relation, etc.)
@@ -578,9 +526,7 @@ class Note extends AbstractEntity {
      * @returns {boolean} true if note has an attribute with given type and name
      *     (excluding inherited)
      */
-    hasOwnedAttribute(type, name) {
-        return !!this.getOwnedAttribute(type, name);
-    }
+    hasOwnedAttribute(type, name) { return !!this.getOwnedAttribute(type, name); }
 
     /**
      * @param {string} type - attribute type (label, relation, etc.)
@@ -624,52 +570,40 @@ class Note extends AbstractEntity {
      * @returns {Attribute[]} all note's labels (attributes with type label),
      *     including inherited ones
      */
-    getLabels(name) {
-        return this.getAttributes(LABEL, name);
-    }
+    getLabels(name) { return this.getAttributes(LABEL, name); }
 
     /**
      * @param {string} [name] - label name to filter
      * @returns {string[]} all note's label values, including inherited ones
      */
-    getLabelValues(name) {
-        return this.getLabels(name).map(l => l.value);
-    }
+    getLabelValues(name) { return this.getLabels(name).map(l => l.value); }
 
     /**
      * @param {string} [name] - label name to filter
      * @returns {Attribute[]} all note's labels (attributes with type label),
      *     excluding inherited ones
      */
-    getOwnedLabels(name) {
-        return this.getOwnedAttributes(LABEL, name);
-    }
+    getOwnedLabels(name) { return this.getOwnedAttributes(LABEL, name); }
 
     /**
      * @param {string} [name] - label name to filter
      * @returns {string[]} all note's label values, excluding inherited ones
      */
-    getOwnedLabelValues(name) {
-        return this.getOwnedAttributes(LABEL, name).map(l => l.value);
-    }
+    getOwnedLabelValues(name) { return this.getOwnedAttributes(LABEL, name).map(l => l.value); }
 
     /**
      * @param {string} [name] - relation name to filter
      * @returns {Attribute[]} all note's relations (attributes with type
      *     relation), including inherited ones
      */
-    getRelations(name) {
-        return this.getAttributes(RELATION, name);
-    }
+    getRelations(name) { return this.getAttributes(RELATION, name); }
 
     /**
      * @param {string} [name] - relation name to filter
      * @returns {Attribute[]} all note's relations (attributes with type
      *     relation), excluding inherited ones
      */
-    getOwnedRelations(name) {
-        return this.getOwnedAttributes(RELATION, name);
-    }
+    getOwnedRelations(name) { return this.getOwnedAttributes(RELATION, name); }
 
     /**
      * @param {string} [type] - (optional) attribute type to filter
@@ -710,9 +644,7 @@ class Note extends AbstractEntity {
     }
 
     get
-    isArchived() {
-        return this.hasAttribute('label', 'archived');
-    }
+    isArchived() { return this.hasAttribute('label', 'archived'); }
 
     hasInheritableOwnedArchivedLabel() {
         return !!this.ownedAttributes.find(
@@ -826,13 +758,9 @@ class Note extends AbstractEntity {
         return this.getLabels().filter(l => l.name.startsWith('relation:'));
     }
 
-    getLabelDefinitions() {
-        return this.getLabels().filter(l => l.name.startsWith('relation:'));
-    }
+    getLabelDefinitions() { return this.getLabels().filter(l => l.name.startsWith('relation:')); }
 
-    isTemplate() {
-        return !!this.targetRelations.find(rel => rel.name === 'template');
-    }
+    isTemplate() { return !!this.targetRelations.find(rel => rel.name === 'template'); }
 
     /** @returns {Note[]} */
     getSubtreeNotesIncludingTemplated() {
@@ -891,29 +819,19 @@ class Note extends AbstractEntity {
         return this.getSubtreeNotes(includeArchived).map(note => note.noteId);
     }
 
-    getDescendantNoteIds() {
-        return this.getSubtreeNoteIds();
-    }
+    getDescendantNoteIds() { return this.getSubtreeNoteIds(); }
 
     get
-    parentCount() {
-        return this.parents.length;
-    }
+    parentCount() { return this.parents.length; }
 
     get
-    childrenCount() {
-        return this.children.length;
-    }
+    childrenCount() { return this.children.length; }
 
     get
-    labelCount() {
-        return this.getAttributes().filter(attr => attr.type === 'label').length;
-    }
+    labelCount() { return this.getAttributes().filter(attr => attr.type === 'label').length; }
 
     get
-    ownedLabelCount() {
-        return this.ownedAttributes.filter(attr => attr.type === 'label').length;
-    }
+    ownedLabelCount() { return this.ownedAttributes.filter(attr => attr.type === 'label').length; }
 
     get
     relationCount() {
@@ -939,24 +857,16 @@ class Note extends AbstractEntity {
     }
 
     get
-    targetRelationCount() {
-        return this.targetRelations.filter(attr => !attr.isAutoLink()).length;
-    }
+    targetRelationCount() { return this.targetRelations.filter(attr => !attr.isAutoLink()).length; }
 
     get
-    targetRelationCountIncludingLinks() {
-        return this.targetRelations.length;
-    }
+    targetRelationCountIncludingLinks() { return this.targetRelations.length; }
 
     get
-    attributeCount() {
-        return this.getAttributes().length;
-    }
+    attributeCount() { return this.getAttributes().length; }
 
     get
-    ownedAttributeCount() {
-        return this.getAttributes().length;
-    }
+    ownedAttributeCount() { return this.getAttributes().length; }
 
     /** @returns {Note[]} */
     getAncestors() {
@@ -995,9 +905,7 @@ class Note extends AbstractEntity {
         return false;
     }
 
-    getTargetRelations() {
-        return this.targetRelations;
-    }
+    getTargetRelations() { return this.targetRelations; }
 
     /**
      * @returns {Note[]} - returns only notes which are templated, does not
@@ -1191,9 +1099,7 @@ class Note extends AbstractEntity {
      * @param {string} name - label name
      * @param {string} [value] - label value (optional)
      */
-    toggleLabel(enabled, name, value) {
-        return this.toggleAttribute(LABEL, enabled, name, value);
-    }
+    toggleLabel(enabled, name, value) { return this.toggleAttribute(LABEL, enabled, name, value); }
 
     /**
      * Based on enabled, relation is either set or removed.
@@ -1212,9 +1118,7 @@ class Note extends AbstractEntity {
      * @param {string} name - label name
      * @param {string} [value] - label value
      */
-    setLabel(name, value) {
-        return this.setAttribute(LABEL, name, value);
-    }
+    setLabel(name, value) { return this.setAttribute(LABEL, name, value); }
 
     /**
      * Update's given relation's value or creates it if it doesn't exist
@@ -1222,9 +1126,7 @@ class Note extends AbstractEntity {
      * @param {string} name - relation name
      * @param {string} value - relation value (noteId)
      */
-    setRelation(name, value) {
-        return this.setAttribute(RELATION, name, value);
-    }
+    setRelation(name, value) { return this.setAttribute(RELATION, name, value); }
 
     /**
      * Remove label name-value pair, if it exists.
@@ -1232,9 +1134,7 @@ class Note extends AbstractEntity {
      * @param {string} name - label name
      * @param {string} [value] - label value
      */
-    removeLabel(name, value) {
-        return this.removeAttribute(LABEL, name, value);
-    }
+    removeLabel(name, value) { return this.removeAttribute(LABEL, name, value); }
 
     /**
      * Remove relation name-value pair, if it exists.
@@ -1242,9 +1142,7 @@ class Note extends AbstractEntity {
      * @param {string} name - relation name
      * @param {string} [value] - relation value (noteId)
      */
-    removeRelation(name, value) {
-        return this.removeAttribute(RELATION, name, value);
-    }
+    removeRelation(name, value) { return this.removeAttribute(RELATION, name, value); }
 
     searchNotesInSubtree(searchString) {
         const searchService = require('../../services/search/services/search');
@@ -1252,9 +1150,7 @@ class Note extends AbstractEntity {
         return searchService.searchNotes(searchString);
     }
 
-    searchNoteInSubtree(searchString) {
-        return this.searchNotesInSubtree(searchString)[0];
-    }
+    searchNoteInSubtree(searchString) { return this.searchNotesInSubtree(searchString)[0]; }
 
     cloneTo(parentNoteId) {
         const cloningService = require('../../services/cloning');
@@ -1299,9 +1195,7 @@ class Note extends AbstractEntity {
     }
 
     get
-    isDeleted() {
-        return !(this.noteId in this.becca.notes);
-    }
+    isDeleted() { return !(this.noteId in this.becca.notes); }
 
     beforeSaving() {
         super.beforeSaving();

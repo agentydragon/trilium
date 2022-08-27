@@ -9,3 +9,4 @@ BreakBeforeBraces: Custom
 BraceWrapping:
   BeforeElse: true
 JavaScriptQuotes: Leave
+AllowShortFunctionsOnASingleLine: Inline
