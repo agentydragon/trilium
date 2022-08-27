@@ -355,15 +355,15 @@ class Note extends AbstractEntity {
      */
     getScriptEnv() {
         if (this.isHtml() || (this.isJavaScript() && this.mime.endsWith('env=frontend'))) {
-            return 'frontend';
+            return "frontend";
         }
 
         if (this.type === 'render') {
-            return 'frontend';
+            return "frontend";
         }
 
         if (this.isJavaScript() && this.mime.endsWith('env=backend')) {
-            return 'backend';
+            return "backend";
         }
 
         return null;
